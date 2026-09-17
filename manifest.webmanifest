@@ -1,0 +1,9 @@
+{
+  "name": "GOLF GUTS METRONOME",
+  "short_name": "GUTS METRO",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#faf7ef",
+  "theme_color": "#faf7ef",
+  "lang": "ja"
+}

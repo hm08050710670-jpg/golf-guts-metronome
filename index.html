@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#faf7ef">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="GUTS METRONOME">
+<link rel="manifest" href="manifest.webmanifest">
+<title>GOLF GUTS METRONOME</title>
+<style>
+:root{--green:#123f2d;--green2:#0b3223;--cream:#faf7ef;--ink:#181512;--line:#c9c3b9}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--cream);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue","Noto Sans JP",sans-serif}
+body{min-height:100%;padding:env(safe-area-inset-top) 14px env(safe-area-inset-bottom)}
+.app{max-width:520px;margin:auto;text-align:center;padding:34px 0 28px}
+.brand{font-size:clamp(38px,11vw,58px);font-weight:650;letter-spacing:.035em;line-height:1}
+.tag{font-size:12px;font-weight:700;letter-spacing:.18em;margin-top:10px}
+.rule{display:flex;align-items:center;gap:18px;margin:30px 8% 24px;color:#244a3a;font-size:11px;letter-spacing:.38em}
+.rule:before,.rule:after{content:"";height:1px;background:#244a3a;flex:1}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+button{font:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.choice{min-height:108px;border:1.5px solid var(--green);border-radius:34px;background:transparent;color:var(--ink)}
+.choice.selected{background:linear-gradient(145deg,var(--green),var(--green2));color:white;border-color:transparent;box-shadow:0 8px 20px rgba(18,63,45,.18)}
+.tempoName{display:block;font-size:clamp(34px,10vw,48px);font-weight:800;line-height:1}
+.bpm{display:block;margin-top:9px;font-size:12px;font-weight:650;letter-spacing:.08em;opacity:.72}
+.tone{min-height:74px;font-size:34px;font-weight:800}
+.signature{font-size:10px;letter-spacing:.14em;color:#c1bbb2;margin:18px 0 12px}
+.beats{display:flex;justify-content:center;gap:clamp(16px,7vw,34px);margin-bottom:24px}
+.beat{width:82px;height:82px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font-size:32px;font-weight:750}
+.beat.active{background:linear-gradient(145deg,var(--green),var(--green2));border-color:transparent;color:white;box-shadow:0 7px 18px rgba(18,63,45,.18)}
+.play{width:100%;min-height:82px;border:0;border-radius:38px;background:linear-gradient(145deg,var(--green),var(--green2));color:white;font-size:21px;font-weight:800;letter-spacing:.14em;display:flex;justify-content:center;align-items:center;gap:18px}
+.footer{margin-top:26px;font-size:10px;letter-spacing:.30em;color:#244a3a;line-height:1.9}
+@media(max-width:360px){.choice{min-height:96px;border-radius:28px}.beat{width:70px;height:70px}.grid{gap:9px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main class="app">
+  <header>
+    <div class="brand">GOLF GUTS</div>
+    <div class="tag">DESIGN YOUR GOLF LIFE</div>
+    <div class="rule"><span>METRONOME</span></div>
+  </header>
+
+  <section class="grid" aria-label="テンポ">
+    <button class="choice selected tempo" data-bpm="90" aria-pressed="true">
+      <span class="tempoName">標準</span><span class="bpm">BPM 90</span>
+    </button>
+    <button class="choice tempo" data-bpm="100" aria-pressed="false">
+      <span class="tempoName">速い</span><span class="bpm">BPM 100</span>
+    </button>
+  </section>
+
+  <section class="grid" aria-label="音色">
+    <button class="choice tone selected sound" data-sound="A" aria-pressed="true">A</button>
+    <button class="choice tone sound" data-sound="B" aria-pressed="false">B</button>
+  </section>
+
+  <div class="signature">3 / 4</div>
+  <div class="beats" aria-label="拍">
+    <div class="beat active">1</div><div class="beat">2</div><div class="beat">3</div>
+  </div>
+
+  <button id="play" class="play" aria-pressed="false"><span id="icon">▶</span><span id="label">START</span></button>
+  <div class="footer">A BETTER SWING<br>A BRIGHTER TOMORROW</div>
+</main>
+<script>
+(()=>{
+let bpm=90,sound="A",playing=false,beat=0,timer=null,nextAt=0,audio=null;
+const q=s=>document.querySelector(s), qa=s=>[...document.querySelectorAll(s)];
+const play=q("#play"), beats=qa(".beat");
+function audioOn(){if(!audio)audio=new (window.AudioContext||window.webkitAudioContext)();if(audio.state==="suspended")audio.resume()}
+function selected(cls,el){qa(cls).forEach(x=>{const on=x===el;x.classList.toggle("selected",on);x.setAttribute("aria-pressed",on)})}
+function tone(at,i){
+ if(!audio)return;
+ const o=audio.createOscillator(),g=audio.createGain(),first=i===0;
+ o.type="sine";
+ if(sound==="A"){
+   o.frequency.setValueAtTime(first?1047:880,at);
+   g.gain.setValueAtTime(.0001,at);g.gain.exponentialRampToValueAtTime(first?.28:.19,at+.004);g.gain.exponentialRampToValueAtTime(.0001,at+.075);
+   o.stop(at+.085);
+ } else {
+   o.frequency.setValueAtTime(first?880:740,at);
+   g.gain.setValueAtTime(.0001,at);g.gain.exponentialRampToValueAtTime(first?.22:.16,at+.008);g.gain.exponentialRampToValueAtTime(.0001,at+.24);
+   o.stop(at+.25);
+ }
+ o.connect(g);g.connect(audio.destination);o.start(at);
+}
+function light(i){beats.forEach((x,n)=>x.classList.toggle("active",n===i))}
+function tick(){
+ if(!playing)return;
+ const now=performance.now();
+ if(now+8>=nextAt){tone(audio.currentTime+.01,beat);light(beat);beat=(beat+1)%3;nextAt+=60000/bpm}
+ timer=setTimeout(tick,12);
+}
+function start(){audioOn();playing=true;beat=0;nextAt=performance.now();q("#icon").textContent="Ⅱ";q("#label").textContent="STOP";play.setAttribute("aria-pressed","true");tick()}
+function stop(){playing=false;if(timer)clearTimeout(timer);timer=null;beat=0;light(0);q("#icon").textContent="▶";q("#label").textContent="START";play.setAttribute("aria-pressed","false")}
+qa(".tempo").forEach(b=>b.addEventListener("click",()=>{bpm=Number(b.dataset.bpm);selected(".tempo",b);if(playing){beat=0;nextAt=performance.now()}}));
+qa(".sound").forEach(b=>b.addEventListener("click",()=>{sound=b.dataset.sound;selected(".sound",b);audioOn();tone(audio.currentTime+.02,0)}));
+play.addEventListener("click",()=>playing?stop():start());
+document.addEventListener("visibilitychange",()=>{if(document.hidden&&playing)stop()});
+if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
+})();
+</script>
+</body>
+</html>
