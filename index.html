@@ -63,12 +63,12 @@ body{padding:env(safe-area-inset-top) 14px env(safe-area-inset-bottom)}
     const gain=ctx.createGain();
     const first=i===0;
     osc.type = sound==="A" ? "square" : "sine";
-    osc.frequency.setValueAtTime(sound==="A" ? (first?1400:1050) : (first?900:700), t);
+    osc.frequency.setValueAtTime(sound==="A" ? (first?1500:1250) : (first?1180:1020), t);
     gain.gain.setValueAtTime(0.0001,t);
-    gain.gain.exponentialRampToValueAtTime(sound==="A"?0.30:0.34,t+0.006);
-    gain.gain.exponentialRampToValueAtTime(0.0001,t+(sound==="A"?0.12:0.28));
+    gain.gain.exponentialRampToValueAtTime(sound==="A"?0.28 : 0.30,t+0.006);
+    gain.gain.exponentialRampToValueAtTime(0.0001,t+(sound==="A"?0.09 : 0.27));
     osc.connect(gain); gain.connect(ctx.destination);
-    osc.start(t); osc.stop(t+(sound==="A"?0.13:0.29));
+    osc.start(t); osc.stop(t+(sound==="A"?0.10 : 0.28));
   }
 
   function light(i){beats.forEach((x,n)=>x.classList.toggle("active",n===i));}
