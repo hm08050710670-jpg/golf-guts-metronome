@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#faf7ef">
+<title>GOLF GUTS METRONOME</title>
+<style>
+:root{--green:#064c36;--cream:#faf7ef;--black:#11110f;--line:#d7d0c3}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;min-height:100%;background:var(--cream);color:var(--black);font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif}
+body{padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
+.app{width:min(100%,520px);margin:auto;padding:46px 18px 34px;text-align:center}
+.logo{font-size:clamp(46px,12vw,64px);font-weight:500;letter-spacing:.025em;line-height:.95;white-space:nowrap}
+.tag{margin-top:20px;font-size:14px;font-weight:700;letter-spacing:.24em;white-space:nowrap}
+.rule{display:flex;align-items:center;gap:22px;margin:44px 10px 30px;color:var(--green)}
+.rule:before,.rule:after{content:"";height:2px;background:var(--green);flex:1}
+.rule b{font-size:23px;letter-spacing:.22em}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:15px}
+.choice{border:2px solid var(--green);background:transparent;border-radius:34px;min-height:112px;color:var(--black);font-weight:800}
+.choice.active{background:var(--green);color:white;box-shadow:0 9px 18px rgba(6,76,54,.12)}
+.tempoName{display:block;font-size:45px}.choice small{display:block;font-size:17px;letter-spacing:.1em;margin-top:8px;opacity:.78}
+.sound .choice{min-height:76px;font-size:36px}
+.meter{font-size:12px;letter-spacing:.25em;color:#bbb4a9;margin:26px 0 9px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin-bottom:28px}
+.beat{position:relative;border:1.5px solid var(--line);border-radius:50%;aspect-ratio:1/1.24;padding:5px;background:transparent;transition:.12s}
+.beat.active{border:3px solid var(--green);background:rgba(6,76,54,.055);box-shadow:0 7px 18px rgba(6,76,54,.10)}
+.num{font-size:28px;font-weight:700;line-height:1.1;margin-top:5px}
+.beat svg{width:92%;height:calc(100% - 32px)}
+.fill{fill:#050505}.arm{fill:none;stroke:var(--cream);stroke-width:6;stroke-linecap:round}.leg{fill:none;stroke:#050505;stroke-width:13;stroke-linecap:round}.club{fill:none;stroke:#050505;stroke-width:3;stroke-linecap:round}.ball{fill:var(--cream);stroke:#050505;stroke-width:2}.motion{fill:none;stroke:var(--green);stroke-width:2.2;stroke-linecap:round}
+.play{width:100%;height:92px;border:0;border-radius:42px;background:var(--green);color:#fff;font-size:30px;font-weight:800;letter-spacing:.12em;box-shadow:0 10px 20px rgba(6,76,54,.12)}
+.playIcon{font-size:22px;margin-right:18px}
+footer{margin-top:38px;color:var(--green);font-size:13px;letter-spacing:.31em;line-height:2}
+@media(max-width:390px){.app{padding-left:14px;padding-right:14px}.logo{font-size:45px}.tag{font-size:12px}.rule{gap:13px}.rule b{font-size:20px}.tempoName{font-size:39px}.steps{gap:7px}.num{font-size:24px}}
+</style>
+</head>
+<body>
+<main class="app">
+  <header><div class="logo">GOLF GUTS</div><div class="tag">DESIGN YOUR GOLF LIFE</div></header>
+  <div class="rule"><b>METRONOME</b></div>
+
+  <section class="grid">
+    <button class="choice tempo active" data-bpm="90"><span class="tempoName">標準</span><small>BPM 90</small></button>
+    <button class="choice tempo" data-bpm="100"><span class="tempoName">速い</span><small>BPM 100</small></button>
+  </section>
+  <section class="grid sound">
+    <button class="choice tone active" data-sound="A">A音</button>
+    <button class="choice tone" data-sound="B">B音</button>
+  </section>
+
+  <div class="meter">3 / 4</div>
+  <section class="steps">
+    <div class="beat active"><div class="num">①</div><svg viewBox="0 0 120 150">
+      <circle class="fill" cx="60" cy="25" r="13"/><path class="fill" d="M42 46Q60 36 78 46L82 91Q60 102 38 91Z"/>
+      <path class="arm" d="M45 59L55 88M75 59L65 88M55 88L60 91L65 88"/><path class="leg" d="M48 92L43 137M72 92L77 137"/>
+      <path class="club" d="M60 90L60 136M52 136L67 136"/><circle class="ball" cx="74" cy="136" r="4"/>
+    </svg></div>
+    <div class="beat"><div class="num">②</div><svg viewBox="0 0 120 150">
+      <circle class="fill" cx="60" cy="25" r="13"/><path class="fill" d="M42 46Q60 36 78 46L82 91Q60 102 38 91Z"/>
+      <path class="arm" d="M45 58L56 84M76 59L58 84"/><path class="leg" d="M48 92L43 137M72 92L77 137"/>
+      <path class="club" d="M57 84L28 127M21 127L35 133"/><circle class="ball" cx="77" cy="136" r="4"/><path class="motion" d="M25 138Q42 145 58 139"/>
+    </svg></div>
+    <div class="beat"><div class="num">③</div><svg viewBox="0 0 120 150">
+      <circle class="fill" cx="60" cy="25" r="13"/><path class="fill" d="M42 46Q60 36 78 46L82 91Q60 102 38 91Z"/>
+      <path class="arm" d="M45 59L64 83M75 59L67 84"/><path class="leg" d="M48 92L43 137M72 92L77 137"/>
+      <path class="club" d="M66 84L94 128M88 132L103 127"/><circle class="ball" cx="108" cy="136" r="4"/><path class="motion" d="M91 141L108 141"/>
+    </svg></div>
+  </section>
+
+  <button id="play" class="play"><span id="icon" class="playIcon">▶</span><span id="label">START</span></button>
+  <footer>A BETTER SWING<br>A BRIGHTER TOMORROW</footer>
+</main>
+<script>
+let bpm=90,sound="A",playing=false,beat=0,timer=null,ctx=null;
+const beats=[...document.querySelectorAll(".beat")];
+function select(q,el){document.querySelectorAll(q).forEach(x=>x.classList.remove("active"));el.classList.add("active")}
+async function unlock(){try{if(!ctx)ctx=new(window.AudioContext||window.webkitAudioContext)();if(ctx.state!=="running")await ctx.resume();return ctx.state==="running"}catch(e){return false}}
+function clickSound(i){
+ if(!ctx||ctx.state!=="running")return;
+ const t=ctx.currentTime,first=i===0,osc=ctx.createOscillator(),gain=ctx.createGain();
+ if(sound==="A"){
+   osc.type="square";osc.frequency.setValueAtTime(first?1500:1250,t);
+   gain.gain.setValueAtTime(.0001,t);gain.gain.exponentialRampToValueAtTime(.28,t+.006);gain.gain.exponentialRampToValueAtTime(.0001,t+.09);
+   osc.connect(gain);gain.connect(ctx.destination);osc.start(t);osc.stop(t+.10);
+ }else{
+   osc.type="sine";osc.frequency.setValueAtTime(first?1750:720,t);
+   gain.gain.setValueAtTime(.0001,t);gain.gain.exponentialRampToValueAtTime(first?.30:.26,t+(first?.004:.010));gain.gain.exponentialRampToValueAtTime(.0001,t+(first?.075:.32));
+   osc.connect(gain);gain.connect(ctx.destination);osc.start(t);osc.stop(t+(first?.08:.33));
+ }
+}
+function light(i){beats.forEach((x,n)=>x.classList.toggle("active",n===i))}
+function cycle(){if(!playing)return;light(beat);clickSound(beat);beat=(beat+1)%3;timer=setTimeout(cycle,60000/bpm)}
+async function start(){if(!await unlock()){alert("音声を開始できませんでした。Safariで開き直してください。");return}playing=true;beat=0;document.getElementById("icon").textContent="Ⅱ";document.getElementById("label").textContent="STOP";cycle()}
+function stop(){playing=false;clearTimeout(timer);beat=0;light(0);document.getElementById("icon").textContent="▶";document.getElementById("label").textContent="START"}
+document.querySelectorAll(".tempo").forEach(b=>b.onclick=()=>{bpm=+b.dataset.bpm;select(".tempo",b);if(playing){clearTimeout(timer);beat=0;cycle()}});
+document.querySelectorAll(".tone").forEach(b=>b.onclick=async()=>{sound=b.dataset.sound;select(".tone",b);if(await unlock())clickSound(0)});
+document.getElementById("play").onclick=()=>playing?stop():start();
+</script>
+</body></html>
